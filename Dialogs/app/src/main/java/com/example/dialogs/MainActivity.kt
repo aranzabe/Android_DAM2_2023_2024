@@ -19,6 +19,10 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(applicationContext,
             "Has pulsado no", Toast.LENGTH_SHORT).show()
     }
+    val negativeButtonClickVentana2 = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            "Conexión denegada", Toast.LENGTH_SHORT).show()
+    }
     val neutralButtonClick = { dialog: DialogInterface, which: Int ->
         Toast.makeText(applicationContext,
             "Quizá", Toast.LENGTH_SHORT).show()
@@ -30,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btUno.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val ventana = AlertDialog.Builder(this)
 
-            with(builder)
+            with(ventana)
             {
                 setTitle("Título")
                 setMessage("Mensaje a mostrar")
@@ -49,11 +53,11 @@ class MainActivity : AppCompatActivity() {
                 setTitle("Título")
                 setMessage("Mensaje a mostrar")
                 //Otra forma es definir directamente aquí lo que se hace cuando se pulse.
-                setPositiveButton("OK", DialogInterface.OnClickListener(function = { dialog: DialogInterface, which: Int ->
+                setPositiveButton("Aceptar", DialogInterface.OnClickListener(function = { dialog: DialogInterface, which: Int ->
                     Toast.makeText(applicationContext,
                         "Has pulsado sí", Toast.LENGTH_SHORT).show()
                 }))
-                setNegativeButton("No", ({ dialog: DialogInterface, which: Int ->
+                setNegativeButton("Cancelar", ({ dialog: DialogInterface, which: Int ->
                     Toast.makeText(applicationContext,
                         "Has pulsado no", Toast.LENGTH_SHORT).show()
                 }))
@@ -67,9 +71,9 @@ class MainActivity : AppCompatActivity() {
             {
                 setTitle("Título")
                 setMessage("Mensaje a mostrar")
-                setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
-                setNegativeButton("No", negativeButtonClick)
-                setNeutralButton("Quizá", neutralButtonClick)
+                setPositiveButton("Sí", DialogInterface.OnClickListener(function = positiveButtonClick))
+                setNegativeButton("No", negativeButtonClickVentana2)
+                setNeutralButton("Cancelar", neutralButtonClick)
                 show()
             }
         }
@@ -81,11 +85,11 @@ class MainActivity : AppCompatActivity() {
 
             builder.setTitle("Varias opciones")
             builder.setMultiChoiceItems(items, null
-            ) { dialog, which, isChecked ->
+            ) { dialog, elementoActual, isChecked ->
                 if (isChecked) {
-                    selectedList.add(which)
-                } else if (selectedList.contains(which)) {
-                    selectedList.remove(Integer.valueOf(which))
+                    selectedList.add(elementoActual)
+                } else if (selectedList.contains(elementoActual)) {
+                    selectedList.remove(Integer.valueOf(elementoActual))
                 }
             }
 
@@ -106,6 +110,7 @@ class MainActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             val inflater = layoutInflater
             builder.setTitle("Con EditText")
+
             val dialogLayout = inflater.inflate(R.layout.alert_dialog_with_edittext, null)
             val editText  = dialogLayout.findViewById<EditText>(R.id.editText)
             builder.setView(dialogLayout)

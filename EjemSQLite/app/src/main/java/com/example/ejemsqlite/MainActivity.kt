@@ -2,6 +2,7 @@ package com.example.ejemsqlite
 
 import Auxiliar.Conexion
 import Modelo.Persona
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button

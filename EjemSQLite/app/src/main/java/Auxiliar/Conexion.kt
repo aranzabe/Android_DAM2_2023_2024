@@ -3,6 +3,7 @@ package Auxiliar
 import Conexion.AdminSQLIteConexion
 import Modelo.Persona
 import android.content.ContentValues
+import android.content.Context
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -13,7 +14,7 @@ object Conexion {
         this.nombreBD = nombreBD
     }
 
-    fun addPersona(contexto: AppCompatActivity, p: Persona){
+    fun addPersona(contexto: Context, p: Persona){
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
         val registro = ContentValues()
@@ -24,7 +25,7 @@ object Conexion {
         bd.close()
     }
 
-    fun delPersona(contexto: AppCompatActivity, dni: String):Int{
+    fun delPersona(contexto: Context, dni: String):Int{
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
         val cant = bd.delete("personas", "dni='${dni}'", null)
@@ -32,7 +33,7 @@ object Conexion {
         return cant
     }
 
-    fun modPersona(contexto:AppCompatActivity, dni:String, p:Persona):Int {
+    fun modPersona(contexto:Context, dni:String, p:Persona):Int {
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
         val registro = ContentValues()
@@ -43,7 +44,7 @@ object Conexion {
         return cant
     }
 
-    fun buscarPersona(contexto: AppCompatActivity, dni:String):Persona? {
+    fun buscarPersona(contexto: Context, dni:String):Persona? {
         var p:Persona? = null
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
@@ -58,8 +59,8 @@ object Conexion {
         return p
     }
 
-    fun obtenerPersonas(contexto: AppCompatActivity):ArrayList<Persona>{
-        var personas:ArrayList<Persona> = ArrayList(1)
+    fun obtenerPersonas(contexto: Context):ArrayList<Persona>{
+        var personas:ArrayList<Persona> = ArrayList()
 
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
